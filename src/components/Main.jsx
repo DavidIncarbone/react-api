@@ -41,6 +41,9 @@ function Main() {
             console.log(res.data)
             setMyPosts(res.data.data)
         })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     //DELETE

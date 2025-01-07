@@ -3,12 +3,45 @@ import posts from "../data/posts"
 import Card from "./Card"
 import tagsStyle from "../style/Tags.module.css"
 import { TagsList, filteredTags } from "./TagsList";
-import Button from "./Button"
+import Button from "./Button";
+import axios from "axios";
+
+// ADD POST
+const initialNewPost = {
+    id: crypto.randomUUID(),
+    title: "",
+    description: "",
+    image: "",
+    category: "",
+    tags: [],
+    status: false
+
+};
+
+const options = ["Cinema", "Calcio", "Viaggi"];
+const postsAPI = "http://localhost:3000/posts";
+
 
 function Main() {
 
+    const [myPosts, setMyPosts] = useState([]);
+    const [newPost, setNewPost] = useState(initialNewPost);
+    const [postList, setPostList] = useState([]);
 
-    const [myPosts, setMyPosts] = useState(posts);
+    // ***** FUNCTIONS *****
+
+    //GET DATA
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    function getData() {
+        axios.get(postsAPI).then((res) => {
+            console.log(res.data)
+        })
+    }
+
     //DELETE
     function deleteItem(id) {
 
@@ -23,41 +56,19 @@ function Main() {
         )
     }
 
-    // ADD POST
-
-    const initialNewPost = {
-        id: crypto.randomUUID(),
-        title: "",
-        description: "",
-        image: "",
-        category: "",
-        tags: [],
-        status: false
-
-    };
-    const [newPost, setNewPost] = useState(initialNewPost);
-    const [postList, setPostList] = useState([]);
-    const options = ["Cinema", "Calcio", "Viaggi"];
-
-
-
-    // FUNCTIONS
+    //HANDLE
 
     function handleInput(event) {
         const name = event.target.name
         const value =
             event.target.type === "checkbox" ? event.target.checked : event.target.value;
         setNewPost({ ...newPost, [name]: value });
-
     }
     function handleSubmit(event) {
         event.preventDefault();
         setPostList([...postList, newPost]);
         setNewPost(initialNewPost);
         console.log(postList);
-
-
-
     }
     function handleTags(event) {
         setNewPost((newPost) => {
@@ -72,8 +83,6 @@ function Main() {
             }
         })
     }
-
-
     const handleCheckboxChange = () => {
         alert('Stai per pubblicare un post!');
         handleInput(event);
@@ -85,6 +94,8 @@ function Main() {
             <TagsList />
 
             <ul className="d-flex flex-wrap gap-5">
+
+
                 {myPosts.map(post => (
                     post.published &&
                     <Card title={post.title}

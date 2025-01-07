@@ -39,6 +39,7 @@ function Main() {
     function getData() {
         axios.get(postsAPI).then((res) => {
             console.log(res.data)
+            setMyPosts(res.data.data)
         })
     }
 

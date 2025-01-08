@@ -51,11 +51,11 @@ function Main() {
 
         axios.delete(postsAPI + "/" + id);
         setMyPosts(myPosts.filter((post) => post.id !== id))
-        getData();
+
 
     }
     function deleteNewItem(id) {
-
+        axios.delete(postsAPI + "/" + id);
         setPostList(
             postList.filter((post) => post.id !== id)
         )
@@ -71,6 +71,7 @@ function Main() {
     }
     function handleSubmit(event) {
         event.preventDefault();
+        axios.post(postsAPI, { newPost })
         setPostList([...postList, newPost]);
         setNewPost(initialNewPost);
         console.log(postList);

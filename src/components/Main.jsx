@@ -176,7 +176,7 @@ function Main() {
                             id="image"
                             aria-describedby="imagelHelp"
                             onChange={handleInput}
-                            value="https://picsum.photos/200/202"
+                            value={newPost.image}
                             name="image"
                         />
                     </div>

@@ -7,8 +7,16 @@ import Button from "./Button";
 import axios from "axios";
 
 // ADD POST
+
+let newId = 0;
+for (let i = 0; i < posts.length; i++) {
+    if (posts[i].id > newId) {
+        newId = posts[i].id;
+    }
+}
+
 const initialNewPost = {
-    id: crypto.randomUUID(),
+    id: newId += 1,
     title: "",
     description: "",
     image: "",
@@ -71,8 +79,9 @@ function Main() {
     }
     function handleSubmit(event) {
         event.preventDefault();
-        axios.post(postsAPI, { newPost })
+        axios.post(postsAPI, newPost)
         setPostList([...postList, newPost]);
+        console.log(newPost)
         setNewPost(initialNewPost);
         console.log(postList);
     }

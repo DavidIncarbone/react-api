@@ -51,6 +51,7 @@ function Main() {
 
         axios.delete(postsAPI + "/" + id);
         setMyPosts(myPosts.filter((post) => post.id !== id))
+        getData();
 
     }
     function deleteNewItem(id) {

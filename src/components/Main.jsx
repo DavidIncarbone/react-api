@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import posts from "../data/posts"
 import Card from "./Card"
 import tagsStyle from "../style/Tags.module.css"
-import { TagsList, filteredTags } from "./TagsList";
+import { TagsList } from "./TagsList";
 import Button from "./Button";
 import axios from "axios";
 
@@ -28,6 +28,7 @@ const initialNewPost = {
 
 const options = ["Cinema", "Calcio", "Viaggi"];
 const postsAPI = "http://localhost:3000/posts";
+const tagsAPI = "http://localhost:3000/tags"
 
 
 function Main() {
@@ -35,13 +36,15 @@ function Main() {
     const [myPosts, setMyPosts] = useState([]);
     const [newPost, setNewPost] = useState(initialNewPost);
     const [postList, setPostList] = useState([]);
+    const [filteredTags, setFilteredTags] = useState([]);
 
     // ***** FUNCTIONS *****
 
     //GET DATA
 
     useEffect(() => {
-        getData()
+        getData();
+        getTags()
     }, [])
 
     function getData() {
@@ -52,6 +55,13 @@ function Main() {
             .catch((error) => {
                 console.log(error)
             })
+    }
+
+    function getTags() {
+        axios.get(tagsAPI).then((res) => {
+            console.log(res.data)
+            setFilteredTags(res.data.data)
+        })
     }
 
     //DELETE
@@ -106,7 +116,20 @@ function Main() {
     return (
         <main className="d-flex flex-column">
 
-            <TagsList />
+            <div className="w-25 ms-5">
+                <h2 className="ps-1">Lista dei Tags</h2>
+                <ul>
+                    {
+                        filteredTags.map((tag, index) => {
+                            return (
+                                < li key={`card-tag-${index}xxx`}>{tag}</li>
+                            )
+                        }
+                        )
+                    }
+
+                </ul>
+            </div >
 
             <ul className="d-flex flex-wrap gap-5">
 

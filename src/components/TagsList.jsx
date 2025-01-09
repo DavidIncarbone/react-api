@@ -1,30 +1,26 @@
-import posts from "../data/posts"
 
-const myPosts = [...posts]
-const filteredTags = []
-const myTags = myPosts.map((post) => post.tags)
-console.log(myTags)
-for (let i = 0; i < myTags.length; i++) {
-
-    for (let j = 0; j < myTags[i].length; j++) {
-        filteredTags.indexOf(myTags[i][j]) === -1 && filteredTags.push(myTags[i][j])
-    }
-
-}
+import filteredTags from "./Main"
 function TagsList() {
+
     return (
         <div className="w-25 ms-5">
             <h2 className="ps-1">Lista dei Tags</h2>
             <ul>
-                {filteredTags.map((tag, index) => {
+                {
+                    filteredTags.map((tag) => {
+                        return (
+                            < li key={`card-tag-${index}xxx`}>{tag}</li>
+                        )
+                    }
+                    )
+                }
 
-                    return <li key={`card-tag-${index}xxx`}>{tag}</li>
-                })}
             </ul>
-        </div>
+        </div >
     )
-}
-export { TagsList, filteredTags }
 
-console.log(filteredTags)
+}
+export { TagsList }
+
+
 
